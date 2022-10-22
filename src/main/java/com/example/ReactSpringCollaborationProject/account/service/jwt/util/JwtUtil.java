@@ -1,9 +1,9 @@
-package com.example.ReactSpringCollaborationProject.jwt.util;
+package com.example.ReactSpringCollaborationProject.account.service.jwt.util;
 
 
 import com.example.ReactSpringCollaborationProject.account.entity.RefreshToken;
 import com.example.ReactSpringCollaborationProject.account.repository.RefreshTokenRepository;
-import com.example.ReactSpringCollaborationProject.jwt.dto.TokenDto;
+import com.example.ReactSpringCollaborationProject.account.service.jwt.dto.TokenDto;
 import com.example.ReactSpringCollaborationProject.security.user.UserDetailsServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

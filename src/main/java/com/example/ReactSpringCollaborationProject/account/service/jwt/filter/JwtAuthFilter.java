@@ -1,7 +1,7 @@
-package com.example.ReactSpringCollaborationProject.jwt.filter;
+package com.example.ReactSpringCollaborationProject.account.service.jwt.filter;
 
 import com.example.ReactSpringCollaborationProject.global.dto.GlobalResDto;
-import com.example.ReactSpringCollaborationProject.jwt.util.JwtUtil;
+import com.example.ReactSpringCollaborationProject.account.service.jwt.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

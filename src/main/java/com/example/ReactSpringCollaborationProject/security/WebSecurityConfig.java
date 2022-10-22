@@ -1,7 +1,7 @@
 package com.example.ReactSpringCollaborationProject.security;
 
-import com.example.ReactSpringCollaborationProject.jwt.filter.JwtAuthFilter;
-import com.example.ReactSpringCollaborationProject.jwt.util.JwtUtil;
+import com.example.ReactSpringCollaborationProject.account.service.jwt.filter.JwtAuthFilter;
+import com.example.ReactSpringCollaborationProject.account.service.jwt.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

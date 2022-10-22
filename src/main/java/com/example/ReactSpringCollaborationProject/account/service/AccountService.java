@@ -1,14 +1,16 @@
 package com.example.ReactSpringCollaborationProject.account.service;
 
-import com.example.ReactSpringCollaborationProject.account.dto.AccountReqDto;
-import com.example.ReactSpringCollaborationProject.account.dto.LoginReqDto;
+import com.example.ReactSpringCollaborationProject.account.entity.dto.AccountReqDto;
+import com.example.ReactSpringCollaborationProject.account.entity.dto.LoginReqDto;
 import com.example.ReactSpringCollaborationProject.account.entity.Account;
 import com.example.ReactSpringCollaborationProject.account.entity.RefreshToken;
+import com.example.ReactSpringCollaborationProject.account.entity.dto.UserInfoDto;
 import com.example.ReactSpringCollaborationProject.account.repository.AccountRepository;
 import com.example.ReactSpringCollaborationProject.account.repository.RefreshTokenRepository;
 import com.example.ReactSpringCollaborationProject.global.dto.GlobalResDto;
-import com.example.ReactSpringCollaborationProject.jwt.dto.TokenDto;
-import com.example.ReactSpringCollaborationProject.jwt.util.JwtUtil;
+import com.example.ReactSpringCollaborationProject.account.service.jwt.dto.TokenDto;
+import com.example.ReactSpringCollaborationProject.account.service.jwt.util.JwtUtil;
+import com.example.ReactSpringCollaborationProject.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +32,7 @@ public class AccountService {
     @Transactional
     public GlobalResDto signup(AccountReqDto accountReqDto) {
         // email 중복 검사
-        if(accountRepository.findByEmail(accountReqDto.getEmail()).isPresent()){
+        if (accountRepository.findByEmail(accountReqDto.getEmail()).isPresent()) {
             throw new RuntimeException("Overlap Check");
         }
 
@@ -44,11 +46,9 @@ public class AccountService {
     @Transactional
     public GlobalResDto login(LoginReqDto loginReqDto, HttpServletResponse response) {
 
-        Account account = accountRepository.findByEmail(loginReqDto.getEmail()).orElseThrow(
-                () -> new RuntimeException("Not found Account")
-        );
+        Account account = accountRepository.findByEmail(loginReqDto.getEmail()).orElseThrow(() -> new RuntimeException("Not found Account"));
 
-        if(!passwordEncoder.matches(loginReqDto.getPassword(), account.getPassword())) {
+        if (!passwordEncoder.matches(loginReqDto.getPassword(), account.getPassword())) {
             throw new RuntimeException("Not matches Password");
         }
 
@@ -56,9 +56,9 @@ public class AccountService {
 
         Optional<RefreshToken> refreshToken = refreshTokenRepository.findByAccountEmail(loginReqDto.getEmail());
 
-        if(refreshToken.isPresent()) {
+        if (refreshToken.isPresent()) {
             refreshTokenRepository.save(refreshToken.get().updateToken(tokenDto.getRefreshToken()));
-        }else {
+        } else {
             RefreshToken newToken = new RefreshToken(tokenDto.getRefreshToken(), loginReqDto.getEmail());
             refreshTokenRepository.save(newToken);
         }
@@ -72,5 +72,11 @@ public class AccountService {
     private void setHeader(HttpServletResponse response, TokenDto tokenDto) {
         response.addHeader(JwtUtil.ACCESS_TOKEN, tokenDto.getAccessToken());
         response.addHeader(JwtUtil.REFRESH_TOKEN, tokenDto.getRefreshToken());
+    }
+
+    public UserInfoDto getUserInfo(Account account) {
+        var r = UserInfoDto(account);
+
+        return;
     }
 }

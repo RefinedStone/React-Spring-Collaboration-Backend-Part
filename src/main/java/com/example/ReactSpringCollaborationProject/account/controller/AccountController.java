@@ -1,10 +1,12 @@
 package com.example.ReactSpringCollaborationProject.account.controller;
 
-import com.example.ReactSpringCollaborationProject.account.dto.AccountReqDto;
-import com.example.ReactSpringCollaborationProject.account.dto.LoginReqDto;
+import com.example.ReactSpringCollaborationProject.account.entity.Account;
+import com.example.ReactSpringCollaborationProject.account.entity.dto.AccountReqDto;
+import com.example.ReactSpringCollaborationProject.account.entity.dto.LoginReqDto;
+import com.example.ReactSpringCollaborationProject.account.entity.dto.UserInfoDto;
 import com.example.ReactSpringCollaborationProject.account.service.AccountService;
 import com.example.ReactSpringCollaborationProject.global.dto.GlobalResDto;
-import com.example.ReactSpringCollaborationProject.jwt.util.JwtUtil;
+import com.example.ReactSpringCollaborationProject.account.service.jwt.util.JwtUtil;
 import com.example.ReactSpringCollaborationProject.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,9 +35,14 @@ public class AccountController {
     }
 
     @GetMapping("/issue/token")
-    public GlobalResDto issuedToken(@AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletResponse response){
+    public GlobalResDto issuedToken(@AuthenticationPrincipal UserDetailsImpl userDetails, HttpServletResponse response) {
         response.addHeader(JwtUtil.ACCESS_TOKEN, jwtUtil.createToken(userDetails.getAccount().getEmail(), "Access"));
         return new GlobalResDto("Success IssuedToken", HttpStatus.OK.value());
     }
 
+
+    @GetMapping("/user")
+    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return accountService.getUserInfo(userDetails.getAccount());
+    }
 }

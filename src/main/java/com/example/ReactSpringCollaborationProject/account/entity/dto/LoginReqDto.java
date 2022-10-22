@@ -1,4 +1,4 @@
-package com.example.ReactSpringCollaborationProject.account.dto;
+package com.example.ReactSpringCollaborationProject.account.entity.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
