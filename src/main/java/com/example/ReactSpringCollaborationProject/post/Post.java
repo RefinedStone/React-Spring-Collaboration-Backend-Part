@@ -31,8 +31,8 @@ public class Post extends Timestamped {
     @Column(nullable = true)
     private String email;
 
-//    @Column(nullable = true)
-//    private String imgFileUrlString;
+    @Column(nullable = true)
+    private String urlToString;
 
     @JsonIgnore //JPA 순환참조
     @ManyToOne
@@ -61,10 +61,10 @@ public class Post extends Timestamped {
         // this.imgFileUrlString = imgFile.toString();
     }
 
-    public Post(PostRequestDto requestDto, String email) {
+    public Post(PostRequestDto requestDto, String urlToString) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
-        this.email = email;
+        this.urlToString = urlToString;
     }
 
     public void update(PostRequestDto requestDto) {

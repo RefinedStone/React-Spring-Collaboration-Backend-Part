@@ -8,12 +8,14 @@ public class PostResponseDto {
     private String title;
     private String contents;
     private String email;
+    private String urlToString;
 
     public PostResponseDto(Post post) {
         this.postId = post.getId();
         this.title = post.getTitle();
         this.contents = post.getContents();
         this.email = post.getEmail();
+        this.urlToString = post.getUrlToString();
 
 //        if (post.getComment() == null) {
 //            this.commentsNum = 0;

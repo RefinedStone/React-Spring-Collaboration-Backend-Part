@@ -7,6 +7,9 @@ import com.example.ReactSpringCollaborationProject.security.user.UserDetailsImpl
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RequestMapping("/dev")
 @RequiredArgsConstructor
@@ -21,10 +24,12 @@ public class PostController {
         return ResponseDto.success(postService.getAllpost());
     }
 
-    //글 쓰기
-    @PostMapping("/post")
-    public ResponseDto<?> createPost(@RequestBody PostRequestDto postRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseDto.success(postService.createPost(postRequestDto, userDetails.getAccount()));
+    //글쓰기 + img 업로드
+    @PostMapping(name = "post with s3 image upload", value = "/post")
+    public ResponseDto<?> createPost(@RequestPart("data") PostRequestDto postRequestDto,
+                                     @RequestPart("files") MultipartFile imgFile,
+                                     @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+        return ResponseDto.success(postService.createPost(postRequestDto, imgFile, userDetails.getAccount()));
     }
 
     //글 수정
