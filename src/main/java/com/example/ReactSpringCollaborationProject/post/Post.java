@@ -1,5 +1,6 @@
 package com.example.ReactSpringCollaborationProject.post;
 
+
 import com.example.ReactSpringCollaborationProject.Timestamped;
 import com.example.ReactSpringCollaborationProject.account.entity.Account;
 import com.example.ReactSpringCollaborationProject.comment.entity.Comment;
@@ -10,6 +11,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+
 
 @NoArgsConstructor
 @Setter
@@ -32,7 +34,7 @@ public class Post extends Timestamped {
 
     @JsonIgnore //JPA 순환참조
     @ManyToOne
-    @JoinColumn(name = "account_Id")
+    @JoinColumn(name="account_Id")
     private Account account;
 
 
@@ -42,4 +44,30 @@ public class Post extends Timestamped {
 
 
 
+
+    public Post(String contents, String title) {
+        this.contents = contents;
+        this.title = title;
+    }
+    public Post(PostRequestDto requestDto) {
+        this.contents = requestDto.getContents();
+        this.title = requestDto.getTitle();
+    }
+    public Post(PostRequestDto requestDto, Account account) {
+        this.contents = requestDto.getContents();
+        this.title = requestDto.getTitle();
+        this.account = account;
+        this.email = account.getEmail();
+    }
+
+    public Post(PostRequestDto requestDto, String email){
+        this.contents = requestDto.getContents();
+        this.title = requestDto.getTitle();
+        this.email = email;
+
+    }
+    public void update(PostRequestDto requestDto) {
+        this.contents = requestDto.getContents();
+        this.title = requestDto.getTitle();
+    }
 }
