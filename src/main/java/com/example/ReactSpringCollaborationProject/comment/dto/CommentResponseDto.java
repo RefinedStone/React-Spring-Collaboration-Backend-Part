@@ -10,9 +10,8 @@ public class CommentResponseDto {
     private String comments;
     private List<Comment> commentList;
     private Long postId;
-
-
     private String success;
+
     public CommentResponseDto(Comment comment) {
         this.comments = comment.getComments();
     }
