@@ -74,9 +74,9 @@ public class AccountService {
         response.addHeader(JwtUtil.REFRESH_TOKEN, tokenDto.getRefreshToken());
     }
 
-    public UserInfoDto getUserInfo(Account account) {
-        var r = UserInfoDto(account);
-
-        return;
-    }
+//    public UserInfoDto getUserInfo(Account account) {
+//        var r = UserInfoDto(account);
+//
+//        return;
+//    }
 }

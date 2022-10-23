@@ -5,28 +5,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
-
 
 @Service
 public class PostService {
     private final PostRepository postRepository;
+
     @Autowired
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
     // 모든 글 읽어오기
-    public PostResponseDto getAllpost() {
-        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-        return new PostResponseDto(postList);
+    public List<PostResponseDto> getAllpost() {
+        var postLists = postRepository.findAllByOrderByCreatedAtDesc();
+        var postDtoLists = new ArrayList<PostResponseDto>();
+        for (Post postList : postLists) {
+            postDtoLists.add(new PostResponseDto(postList));
+        }
+        return postDtoLists;
     }
 
     //글 쓰기
+    @Transactional
     public PostResponseDto createPost(PostRequestDto requestDto, Account account) {
         Post post = new Post(requestDto, account);
-        return new PostResponseDto(postRepository.save(post));
+        postRepository.save(post);
+        return new PostResponseDto(post);
     }
+
 
     //글 수정
     @Transactional
@@ -44,16 +52,14 @@ public class PostService {
 
     //글 삭제
     @Transactional
-    public PostResponseDto deletePost(Long id, Account account) {
+    public String deletePost(Long id, Account account) {
         Post post = postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("id 없습니다.")
         );
-        if (!account.getEmail().equals(post.getEmail())){
+        if (!account.getEmail().equals(post.getEmail())) {
             throw new IllegalArgumentException("email 불일치");
         }
         postRepository.deleteById(id);
-        return new PostResponseDto("delete success");
+        return "delete success";
     }
-
 }
-

@@ -26,14 +26,14 @@ public class CommentController {
 
     // 댓글수정 api
     @PutMapping("/{id}")
-    public ResponseDto<?> updateComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long Id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseDto.success(commentService.updateComment(requestDto, Id, userDetails.getAccount()));
+    public ResponseDto<?> updateComment(@RequestBody CommentRequestDto requestDto, @PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseDto.success(commentService.updateComment(requestDto, id, userDetails.getAccount()));
     }
 
     // 댓글삭제 api
     @DeleteMapping("/{id}")
-    public ResponseDto<?> deleteComment(@PathVariable Long Id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseDto.success(commentService.deleteComment(Id,userDetails.getAccount()));
+    public ResponseDto<?> deleteComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseDto.success(commentService.deleteComment(id,userDetails.getAccount()));
     }
 
     //댓글 1개 읽기 api

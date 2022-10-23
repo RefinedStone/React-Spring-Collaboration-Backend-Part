@@ -8,6 +8,9 @@ import com.example.ReactSpringCollaborationProject.comment.repository.CommentRep
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class CommentService {
@@ -33,17 +36,21 @@ public class CommentService {
     }
 
     //커멘트 삭제
-    public CommentResponseDto deleteComment(Long Id, Account account) {
+    public String deleteComment(Long Id, Account account) {
         var r = commentRepository.findById(Id).orElseThrow(
                 () -> new RuntimeException("comment is not exist"));
         if (!account.getEmail().equals(r.getEmail())) {
             throw new RuntimeException("not matched email");}
         commentRepository.deleteById(Id);
-        return new CommentResponseDto("Delete success");
+        return "Delete success";
     }
-    public CommentResponseDto getAllMyComments(Account account) {
-        var r = commentRepository.findAllByEmail(account.getEmail());
-        return new CommentResponseDto(r);
+    public List<CommentResponseDto> getAllMyComments(Account account) {
+        var commentLists = commentRepository.findAllByEmail(account.getEmail());
+        var commentResponseLists = new ArrayList<CommentResponseDto>();
+        for(Comment commentList: commentLists){
+            commentResponseLists.add(new CommentResponseDto(commentList));
+        }
+        return commentResponseLists;
     }
     //커멘트 읽기
     public CommentResponseDto getOneComment(Long Id, Account account) {

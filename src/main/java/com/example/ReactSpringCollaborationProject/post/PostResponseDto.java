@@ -2,8 +2,6 @@ package com.example.ReactSpringCollaborationProject.post;
 
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
 public class PostResponseDto {
     private Long postId;
@@ -11,23 +9,26 @@ public class PostResponseDto {
     private String contents;
     private String email;
 
-    private long commentsNum;
-    private List<Post> postList;
-    private String success;
-
     public PostResponseDto(Post post) {
+        this.postId = post.getId();
         this.title = post.getTitle();
         this.contents = post.getContents();
         this.email = post.getEmail();
-        this.postId = post.getId();
-        this.commentsNum = post.getComment().size();
+
+//        if (post.getComment() == null) {
+//            this.commentsNum = 0;
+//        } else {
+//            this.commentsNum = post.getComment().size();
+//        }
     }
 
     public PostResponseDto(String success) {
-        this.success = success;
+        //   this.success = success;
     }
 
-    public PostResponseDto(List<Post> postList) {
-        this.postList = postList;
-    }
+//    public PostResponseDto(List<Post> postList) {
+//        this.postList = postList;
+//    }
+
+
 }

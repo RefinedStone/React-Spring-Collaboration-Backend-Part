@@ -31,8 +31,8 @@ public class JwtUtil {
     private final UserDetailsServiceImpl userDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    private static final long ACCESS_TIME = 10 * 1000L;
-    private static final long REFRESH_TIME = 60 * 1000L;
+    private static final long ACCESS_TIME = 24 * 60 * 60 * 1000L;
+    private static final long REFRESH_TIME = 24 * 60 * 60 * 1000L;
     public static final String ACCESS_TOKEN = "Access_Token";
     public static final String REFRESH_TOKEN = "Refresh_Token";
 
@@ -50,7 +50,7 @@ public class JwtUtil {
 
     // header 토큰을 가져오는 기능
     public String getHeaderToken(HttpServletRequest request, String type) {
-        return type.equals("Access") ? request.getHeader(ACCESS_TOKEN) :request.getHeader(REFRESH_TOKEN);
+        return type.equals("Access") ? request.getHeader(ACCESS_TOKEN) : request.getHeader(REFRESH_TOKEN);
     }
 
     // 토큰 생성
@@ -88,7 +88,7 @@ public class JwtUtil {
     public Boolean refreshTokenValidation(String token) {
 
         // 1차 토큰 검증
-        if(!tokenValidation(token)) return false;
+        if (!tokenValidation(token)) return false;
 
         // DB에 저장한 토큰 비교
         Optional<RefreshToken> refreshToken = refreshTokenRepository.findByAccountEmail(getEmailFromToken(token));

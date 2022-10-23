@@ -28,44 +28,45 @@ public class Post extends Timestamped {
     private String title;
     @Column(nullable = true)
     private String contents;
-
     @Column(nullable = true)
     private String email;
 
+//    @Column(nullable = true)
+//    private String imgFileUrlString;
+
     @JsonIgnore //JPA 순환참조
     @ManyToOne
-    @JoinColumn(name="account_Id")
+    @JoinColumn(name = "account_Id")
     private Account account;
-
 
     //One post to Many comment
     @OneToMany(mappedBy = "post")
     private List<Comment> comment;
 
-
-
-
     public Post(String contents, String title) {
         this.contents = contents;
         this.title = title;
     }
+
     public Post(PostRequestDto requestDto) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
     }
+
     public Post(PostRequestDto requestDto, Account account) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
         this.account = account;
         this.email = account.getEmail();
+        // this.imgFileUrlString = imgFile.toString();
     }
 
-    public Post(PostRequestDto requestDto, String email){
+    public Post(PostRequestDto requestDto, String email) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
         this.email = email;
-
     }
+
     public void update(PostRequestDto requestDto) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();

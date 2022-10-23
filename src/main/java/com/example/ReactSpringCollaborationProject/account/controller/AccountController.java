@@ -40,8 +40,8 @@ public class AccountController {
     }
 
 
-    @GetMapping("/user")
-    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
-        return accountService.getUserInfo(userDetails.getAccount());
-    }
+//    @GetMapping("/user")
+//    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
+//        return accountService.getUserInfo(userDetails.getAccount());
+//    }
 }

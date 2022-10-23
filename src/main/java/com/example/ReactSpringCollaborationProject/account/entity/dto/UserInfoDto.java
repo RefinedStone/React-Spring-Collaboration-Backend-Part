@@ -1,6 +1,7 @@
 package com.example.ReactSpringCollaborationProject.account.entity.dto;
 
 import com.example.ReactSpringCollaborationProject.account.entity.Account;
+import com.example.ReactSpringCollaborationProject.post.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

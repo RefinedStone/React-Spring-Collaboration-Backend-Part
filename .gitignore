@@ -17,3 +17,6 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 application-jwtToken.properties
+
+#
+SJ-HTTP-REQUEST.http

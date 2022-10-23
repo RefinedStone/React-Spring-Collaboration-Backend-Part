@@ -1,4 +1,5 @@
-package com.sparta.awss3settings.aws_s3;
+package com.example.ReactSpringCollaborationProject.aws_s3;
+
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;

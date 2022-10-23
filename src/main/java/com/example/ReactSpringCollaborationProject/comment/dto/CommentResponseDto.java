@@ -2,23 +2,21 @@ package com.example.ReactSpringCollaborationProject.comment.dto;
 
 import com.example.ReactSpringCollaborationProject.comment.entity.Comment;
 import lombok.Getter;
+
 import java.util.List;
 
 @Getter
 public class CommentResponseDto {
-
-    private String comments;
-    private List<Comment> commentList;
     private Long postId;
-    private String success;
+    private String comments;
+    private String email;
 
     public CommentResponseDto(Comment comment) {
+        this.postId = comment.getPostId();
         this.comments = comment.getComments();
+        this.email = comment.getEmail();
+
     }
-    public CommentResponseDto(String success){
-        this.success = success;
-    }
-    public CommentResponseDto(List<Comment> commentList){
-        this.commentList = commentList;
-    }
+
+
 }
