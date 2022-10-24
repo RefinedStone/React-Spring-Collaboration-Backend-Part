@@ -28,21 +28,21 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String accessToken = jwtUtil.getHeaderToken(request, "Access");
         String refreshToken = jwtUtil.getHeaderToken(request, "Refresh");
 
-        if(accessToken != null) {
-            if(!jwtUtil.tokenValidation(accessToken)){
+        if (accessToken != null) {
+            if (!jwtUtil.tokenValidation(accessToken)) {
                 jwtExceptionHandler(response, "AccessToken Expired", HttpStatus.BAD_REQUEST);
                 return;
             }
             setAuthentication(jwtUtil.getEmailFromToken(accessToken));
-        }else if(refreshToken != null) {
-            if(!jwtUtil.refreshTokenValidation(refreshToken)){
+        } else if (refreshToken != null) {
+            if (!jwtUtil.refreshTokenValidation(refreshToken)) {
                 jwtExceptionHandler(response, "RefreshToken Expired", HttpStatus.BAD_REQUEST);
                 return;
             }
             setAuthentication(jwtUtil.getEmailFromToken(refreshToken));
         }
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
     public void setAuthentication(String email) {

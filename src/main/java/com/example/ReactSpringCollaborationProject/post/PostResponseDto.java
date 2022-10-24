@@ -9,7 +9,6 @@ public class PostResponseDto {
     private String contents;
     private String email;
     private String urlToString;
-    private String urlKey;
 
     public PostResponseDto(Post post) {
         this.postId = post.getId();
@@ -17,7 +16,6 @@ public class PostResponseDto {
         this.contents = post.getContents();
         this.email = post.getEmail();
         this.urlToString = post.getUrlToString();
-        this.urlKey = post.getUrlKey();
     }
 
 

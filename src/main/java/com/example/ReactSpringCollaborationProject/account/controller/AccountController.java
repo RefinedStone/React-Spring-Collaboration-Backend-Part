@@ -1,11 +1,11 @@
 package com.example.ReactSpringCollaborationProject.account.controller;
 
-import com.example.ReactSpringCollaborationProject.account.entity.dto.AccountReqDto;
-import com.example.ReactSpringCollaborationProject.account.entity.dto.LoginReqDto;
-import com.example.ReactSpringCollaborationProject.account.entity.dto.UserInfoDto;
+import com.example.ReactSpringCollaborationProject.account.service.entity.dto.AccountReqDto;
+import com.example.ReactSpringCollaborationProject.account.service.entity.dto.LoginReqDto;
 import com.example.ReactSpringCollaborationProject.account.service.AccountService;
 import com.example.ReactSpringCollaborationProject.account.service.jwt.util.JwtUtil;
 import com.example.ReactSpringCollaborationProject.global.dto.GlobalResDto;
+import com.example.ReactSpringCollaborationProject.global.dto.ResponseDto;
 import com.example.ReactSpringCollaborationProject.security.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,19 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/account")
 @RequiredArgsConstructor
 public class AccountController {
 
     private final JwtUtil jwtUtil;
     private final AccountService accountService;
 
-    @PostMapping("/account/signup")
+    @PostMapping("/signup")
     public GlobalResDto signup(@RequestBody @Valid AccountReqDto accountReqDto) {
         return accountService.signup(accountReqDto);
     }
 
-    @PostMapping("/account/login")
+    @PostMapping("/login")
     public GlobalResDto login(@RequestBody @Valid LoginReqDto loginReqDto, HttpServletResponse response) {
         return accountService.login(loginReqDto, response);
     }
@@ -40,8 +40,13 @@ public class AccountController {
     }
 
 
-//    @GetMapping("/user")
-//    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails){
-//        return accountService.getUserInfo(userDetails.getAccount());
-//    }
+    @GetMapping("/mypost")
+    public ResponseDto<?> getMyPost(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseDto.success(accountService.getMyPost(userDetails.getAccount()));
+    }
+    @GetMapping("/mycomment")
+    public ResponseDto<?> getMyComment(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseDto.success(accountService.getMyComment(userDetails.getAccount()));
+    }
+
 }

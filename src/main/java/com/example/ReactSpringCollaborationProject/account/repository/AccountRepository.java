@@ -1,7 +1,7 @@
 package com.example.ReactSpringCollaborationProject.account.repository;
 
 
-import com.example.ReactSpringCollaborationProject.account.entity.Account;
+import com.example.ReactSpringCollaborationProject.account.service.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

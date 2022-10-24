@@ -36,13 +36,17 @@ public class WebSecurityConfig {
 
         http.cors();
         http.csrf().disable();
+                //ignoringAntMatchers("/user/**");
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests().antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
-
+//        http.logout() // 로그아웃 기능 작동함
+//                .logoutUrl("/api/logout")
+//                .logoutSuccessUrl("/")
+//                .permitAll();
         return http.build();
 
     }

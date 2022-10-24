@@ -1,7 +1,7 @@
 package com.example.ReactSpringCollaborationProject.comment.entity;
 
 import com.example.ReactSpringCollaborationProject.Timestamped;
-import com.example.ReactSpringCollaborationProject.account.entity.Account;
+import com.example.ReactSpringCollaborationProject.account.service.entity.Account;
 import com.example.ReactSpringCollaborationProject.comment.dto.CommentRequestDto;
 import com.example.ReactSpringCollaborationProject.post.Post;
 import lombok.Getter;
@@ -17,6 +17,7 @@ import javax.persistence.*;
 public class Comment extends Timestamped {
 
     @Id
+    @Column(name = "comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

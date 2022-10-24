@@ -38,8 +38,8 @@ public class CommentController {
 
     //댓글 1개 읽기 api
     @GetMapping("/{id}")
-    public ResponseDto<?> getOneComment(@PathVariable Long Id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return ResponseDto.success(commentService.getOneComment(Id,userDetails.getAccount()));
+    public ResponseDto<?> getOneComment(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseDto.success(commentService.getOneComment(id,userDetails.getAccount()));
     }
 
     //내 모든 comments 보여주기

@@ -1,6 +1,6 @@
 package com.example.ReactSpringCollaborationProject.comment.service;
 
-import com.example.ReactSpringCollaborationProject.account.entity.Account;
+import com.example.ReactSpringCollaborationProject.account.service.entity.Account;
 import com.example.ReactSpringCollaborationProject.comment.dto.CommentRequestDto;
 import com.example.ReactSpringCollaborationProject.comment.dto.CommentResponseDto;
 import com.example.ReactSpringCollaborationProject.comment.entity.Comment;

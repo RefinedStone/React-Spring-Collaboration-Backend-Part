@@ -1,6 +1,6 @@
 package com.example.ReactSpringCollaborationProject.post;
 
-import com.example.ReactSpringCollaborationProject.account.entity.Account;
+import com.example.ReactSpringCollaborationProject.account.service.entity.Account;
 import com.example.ReactSpringCollaborationProject.aws_s3.S3UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +51,6 @@ public class PostService {
             postRepository.save(post);
             return new PostResponseDto(post);
         }
-
     }
 
 

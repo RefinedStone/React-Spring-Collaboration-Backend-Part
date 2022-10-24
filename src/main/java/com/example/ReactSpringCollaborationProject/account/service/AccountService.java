@@ -1,16 +1,20 @@
 package com.example.ReactSpringCollaborationProject.account.service;
 
-import com.example.ReactSpringCollaborationProject.account.entity.dto.AccountReqDto;
-import com.example.ReactSpringCollaborationProject.account.entity.dto.LoginReqDto;
-import com.example.ReactSpringCollaborationProject.account.entity.Account;
-import com.example.ReactSpringCollaborationProject.account.entity.RefreshToken;
-import com.example.ReactSpringCollaborationProject.account.entity.dto.UserInfoDto;
+import com.example.ReactSpringCollaborationProject.account.service.entity.Account;
+import com.example.ReactSpringCollaborationProject.account.service.entity.RefreshToken;
+import com.example.ReactSpringCollaborationProject.account.service.entity.dto.AccountReqDto;
+import com.example.ReactSpringCollaborationProject.account.service.entity.dto.LoginReqDto;
 import com.example.ReactSpringCollaborationProject.account.repository.AccountRepository;
 import com.example.ReactSpringCollaborationProject.account.repository.RefreshTokenRepository;
-import com.example.ReactSpringCollaborationProject.global.dto.GlobalResDto;
 import com.example.ReactSpringCollaborationProject.account.service.jwt.dto.TokenDto;
 import com.example.ReactSpringCollaborationProject.account.service.jwt.util.JwtUtil;
-import com.example.ReactSpringCollaborationProject.security.user.UserDetailsImpl;
+import com.example.ReactSpringCollaborationProject.comment.dto.CommentResponseDto;
+import com.example.ReactSpringCollaborationProject.comment.entity.Comment;
+import com.example.ReactSpringCollaborationProject.comment.repository.CommentRepository;
+import com.example.ReactSpringCollaborationProject.global.dto.GlobalResDto;
+import com.example.ReactSpringCollaborationProject.post.Post;
+import com.example.ReactSpringCollaborationProject.post.PostRepository;
+import com.example.ReactSpringCollaborationProject.post.PostResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +34,8 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public GlobalResDto signup(AccountReqDto accountReqDto) {
@@ -74,9 +82,22 @@ public class AccountService {
         response.addHeader(JwtUtil.REFRESH_TOKEN, tokenDto.getRefreshToken());
     }
 
-//    public UserInfoDto getUserInfo(Account account) {
-//        var r = UserInfoDto(account);
-//
-//        return;
-//    }
+    public List<PostResponseDto> getMyPost(Account account) {
+
+        var posts = postRepository.findAllByEmail(account.getEmail());
+        var postResponseDtos = new ArrayList<PostResponseDto>();
+        for (Post post : posts) {
+            postResponseDtos.add(new PostResponseDto(post));
+        }
+        return postResponseDtos;
+    }
+
+    public List<CommentResponseDto> getMyComment(Account account) {
+        var comments = commentRepository.findAllByEmail(account.getEmail());
+        var commentResponseDtos = new ArrayList<CommentResponseDto>();
+        for (Comment comment : comments) {
+            commentResponseDtos.add(new CommentResponseDto(comment));
+        }
+        return commentResponseDtos;
+    }
 }

@@ -18,14 +18,14 @@ public class PostController {
 
     //모든 글 읽어 오기
     @GetMapping("/auth")
-    public ResponseDto<?> getAllpost() {
+    public ResponseDto<?> getAllPost() {
         return ResponseDto.success(postService.getAllpost());
     }
 
     //글쓰기 + img 업로드
     @PostMapping(name = "post with s3 image upload")
     public ResponseDto<?> createPost(@RequestPart("post") PostRequestDto postRequestDto,
-                                     @RequestPart(name="files",required = false) MultipartFile imgFile,
+                                     @RequestPart(name = "files", required = false) MultipartFile imgFile,
                                      @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
         return ResponseDto.success(postService.createPost(postRequestDto, imgFile, userDetails.getAccount()));
     }
