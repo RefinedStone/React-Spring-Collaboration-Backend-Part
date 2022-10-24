@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,7 +27,7 @@ public class S3UploadUtil {
     public String bucket;  // S3 버킷
 
     // S3 파일 업로드
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
+    public Map<String, String> upload(MultipartFile multipartFile, String dirName) throws IOException {
         // MultipartFile -> File
         File convertFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("file convert error")); // 파일을 변환할 수 없으면 에러
@@ -39,8 +41,10 @@ public class S3UploadUtil {
 
         // 로컬 파일 삭제
         convertFile.delete();
-
-        return uploadImageUrl;
+        return new HashMap<String, String>() {{
+            put("key", fileName);
+            put("url", uploadImageUrl);
+        }};
     }
 
     // S3 파일 삭제

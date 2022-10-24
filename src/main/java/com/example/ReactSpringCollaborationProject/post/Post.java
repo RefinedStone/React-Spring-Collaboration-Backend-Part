@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 
 @NoArgsConstructor
@@ -34,6 +35,10 @@ public class Post extends Timestamped {
     @Column(nullable = true)
     private String urlToString;
 
+    @JsonIgnore
+    @Column(nullable = true)
+    private String urlKey;
+
     @JsonIgnore //JPA 순환참조
     @ManyToOne
     @JoinColumn(name = "account_Id")
@@ -53,18 +58,27 @@ public class Post extends Timestamped {
         this.title = requestDto.getTitle();
     }
 
+
+    public Post(PostRequestDto requestDto, Account account,Map<String,String> urlMap) {
+        this.contents = requestDto.getContents();
+        this.title = requestDto.getTitle();
+        this.account = account;
+        this.email = account.getEmail();
+        this.urlToString = urlMap.get("url");
+        this.urlKey = urlMap.get("key");
+    }
     public Post(PostRequestDto requestDto, Account account) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
         this.account = account;
         this.email = account.getEmail();
-        // this.imgFileUrlString = imgFile.toString();
     }
 
-    public Post(PostRequestDto requestDto, String urlToString) {
+    public Post(PostRequestDto requestDto, Map<String,String> urlMap) {
         this.contents = requestDto.getContents();
         this.title = requestDto.getTitle();
-        this.urlToString = urlToString;
+        this.urlToString = urlMap.get("url");
+        this.urlKey = urlMap.get("key");
     }
 
     public void update(PostRequestDto requestDto) {

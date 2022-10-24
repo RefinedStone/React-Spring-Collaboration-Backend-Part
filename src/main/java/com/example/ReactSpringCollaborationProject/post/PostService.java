@@ -17,7 +17,7 @@ public class PostService {
     private final S3UploadUtil s3UploadUtil;
 
     @Autowired
-    public PostService(PostRepository postRepository,S3UploadUtil s3UploadUtil) {
+    public PostService(PostRepository postRepository, S3UploadUtil s3UploadUtil) {
         this.postRepository = postRepository;
         this.s3UploadUtil = s3UploadUtil;
     }
@@ -40,11 +40,18 @@ public class PostService {
 //        return new PostResponseDto(post);
 //    }
     @Transactional
-    public PostResponseDto createPost(PostRequestDto requestDto, MultipartFile imgFile , Account account) throws IOException {
-        String urlToString = s3UploadUtil.upload(imgFile, "post");
-        Post post = new Post(requestDto, urlToString);
-        postRepository.save(post);
-        return new PostResponseDto(post);
+    public PostResponseDto createPost(PostRequestDto requestDto, MultipartFile imgFile, Account account) throws IOException {
+        if (!(imgFile == null)) {
+            var r = s3UploadUtil.upload(imgFile, "test");
+            Post post = new Post(requestDto, account, r);
+            postRepository.save(post);
+            return new PostResponseDto(post);
+        } else {
+            Post post = new Post(requestDto, account);
+            postRepository.save(post);
+            return new PostResponseDto(post);
+        }
+
     }
 
 
@@ -72,6 +79,9 @@ public class PostService {
             throw new IllegalArgumentException("email 불일치");
         }
         postRepository.deleteById(id);
+        if(!(post.getUrlKey()==null)) {
+            s3UploadUtil.delete(post.getUrlKey());
+        }
         return "delete success";
     }
 }
